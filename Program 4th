@@ -1,0 +1,23 @@
+//find common elements between two element:
+class B{
+	int common(String[] arr1,String[] arr2) {
+		System.out.println("Common elements of arr1 and arr2 are:");
+		for(int i=0;i<arr1.length;i++) {
+			for(int j=0;j<arr2.length-1;j++) {
+				if(arr1[i].contentEquals(arr2[j]))
+					System.out.print(arr1[i]+" ");
+			}
+		}
+		
+		return 0;
+		
+	}
+}
+public class CommonElement {
+public static void main(String[] args) {
+	String[] arr1 = {"abc","def","ghi","jkl","mno"};
+	String[] arr2 = {"mno","ghi","xyz","pqr","stu"};
+	B b= new B();
+	b.common(arr1, arr2);
+}
+}
