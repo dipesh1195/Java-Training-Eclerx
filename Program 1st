@@ -1,0 +1,22 @@
+import java.util.Arrays;
+import java.util.Scanner;
+public class Insertion {
+public static void main(String[] args) {
+	Scanner in = new Scanner(System.in);
+	System.out.println("Enter total number of element in array:");
+	int n= in.nextInt();
+	int[] arr = new int[n];
+	for(int i=0;i<n;i++) {
+		System.out.println("Enter elements posistion:");
+		int p= in.nextInt();
+		if(p<n) {
+			System.out.println("Enter array element:");
+			arr[p]=in.nextInt();
+		}
+		else 
+			System.out.println("array index out of bound");
+	}
+       System.out.println(Arrays.toString(arr));
+       in.close();
+}
+}
