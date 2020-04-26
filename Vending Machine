@@ -1,0 +1,134 @@
+import java.util.*;
+
+public class VendingMachine {
+	static Scanner in = new Scanner(System.in);
+	static int n,
+	 candy =10,snack=50,nuts=90,coke=25,pepsi=35,soda=45,change;
+	 static int total=0;
+	static int money() {
+		System.out.println("Enter money: ");
+		 n=in.nextInt();
+		if(n==1 ||n==5 || n==10|| n==25||n==50 ||n==2) {
+			total =total+n;
+		}
+		else {
+			System.out.println("Only 1 5 10 25 and 50 are accepted:");
+		}
+		return n;
+	}
+	static void buy(int ch) {
+		switch(ch) {
+		case 1:
+			System.out.println("Number of candies you want:");
+			int w=in.nextInt();
+			int cost=w*candy;
+			if(total>=cost) {
+			System.out.println("you selected " + w+" candy costs Rs."+cost);
+			change=total-cost;
+			System.out.println("Total refund =" +change);}
+			else{
+				System.out.println("You don't have sufficient money: ");
+			}
+		break;
+		case 2:
+			System.out.println("Number of Snack you want:");
+			 w=in.nextInt();
+			 cost=w*snack;
+			if(total>=cost) {
+				System.out.println("you selected "+w+ " Snack costs Rs."+cost);
+				change=total-cost;
+				System.out.println("Total refund =" +change);}
+				else{
+					System.out.println("You don't have sufficient money: ");
+				}
+			break;
+		case 3:
+			System.out.println("Number of Nuts you want:");
+			 w=in.nextInt();
+			 cost=w*nuts;
+			if(total>=cost) {
+				System.out.println("you selected "+w+ " Nuts costs Rs."+cost);
+				change=total-cost;
+				System.out.println("Total refund =" +change);}
+				else{
+					System.out.println("You don't have sufficient money: ");
+				}
+			break;
+		case 4:System.out.println("Number of Coke you want:");
+		 w=in.nextInt();
+		 cost=w*coke;
+			if(total>=cost) {
+				System.out.println("you selected "+w+ " Coke costs Rs."+cost);
+				change=total-cost;
+				System.out.println("Total refund =" +change);}
+				else{
+					System.out.println("You don't have sufficient money: ");
+				}
+			break;
+		case 5:
+			System.out.println("Number of Pepsi you want:");
+		   w=in.nextInt();
+		   cost=w*pepsi;
+			if(total>=cost) {
+				System.out.println("you selected "+w+ " Pepsi costs Rs."+cost);
+				change=total-cost;
+				System.out.println("Total refund =" +change);}
+				else{
+					System.out.println("You don't have sufficient money: ");
+				}
+			break;
+		case 6:
+			System.out.println("Number of Soda you want:");
+			 w=in.nextInt();
+			 cost=w*soda;
+			if(total>=cost) {
+				System.out.println("you selected "+w+ " Soda costs Rs."+cost);
+				change=total-cost;
+				System.out.println("Total refund =" +change);}
+				else{
+					System.out.println("You don't have sufficient money: ");
+				}
+			break;
+		case 7:
+			System.out.println("Refund Amount = "+total);
+			System.exit(0);
+		}
+	}
+	public static void main(String[] args) {	
+      money();
+     boolean valid =false;
+      while(!valid) {
+    	  System.out.println("Enter more money yes or no");
+    	  String s=in.nextLine();
+    	  if(s.equalsIgnoreCase("yes")) {
+    		  money();}
+    	  else if(s.equalsIgnoreCase("no")){
+    		  valid = true;
+    		}
+    	 
+    	 
+      }
+     System.out.println("Total money Received = "+total); 
+     System.out.println("Chose item to buy: ");
+     System.out.println("1.CANDY(10) \n2.SNACK(50) \n3.NUTS(90) \n4.Coke(25) \n5.Pepsi(35) \n6.Soda(45) \n7.Terminate process:");
+     int ch =in.nextInt();
+      buy(ch);
+      
+      if(change>0) {
+    	  System.out.println("1.Want Refund \n2.Buy More");
+    	  int m= in.nextInt();
+    	  switch(m) {
+    	  case 1:
+    		  System.out.println("total refund Amount = " +change);
+    		  break;
+    	  case 2:
+    		  total =change;
+    		  System.out.println("1.CANDY(10) \n2.SNACK(50) \n3.NUTS(90) \n4.Coke(25) \n5.Pepsi(35) \n6.Soda(45) \n7.Terminate process:");
+    		     ch =in.nextInt();
+    		      buy(ch);
+    	  }
+      }
+      
+	}
+
+}
