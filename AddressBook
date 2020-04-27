@@ -1,16 +1,24 @@
 import java.util.*;
 import java.io.*;
-public class AddressBook  {
-	static String fname;
-	static String lname;
-	static long pno;
-	static String email;
-	public AddressBook(String fname,String lname,long pno,String email){
+
+class Address {
+	public String fname;
+    public String lname;
+	public long pno;
+	public String email;
+	public Address(String fname,String lname,long pno,String email){
 		this.fname=fname;
 		this.lname=lname;
 		this.email=email;
 		this.pno=pno;
-	}
+	}}
+class comp implements Comparator<Address>{
+
+	public int compare(Address a1, Address a2) {
+		// TODO Auto-generated method stub
+		return  (a1.lname).compareTo(a2.lname);
+	}}
+public class AddressBook{
 	public static void Search(String srch) {
 		try {
 		FileReader fr =new FileReader("C:\\Users\\Dipesh Kushwaha\\Desktop\\output.txt");
@@ -18,7 +26,7 @@ public class AddressBook  {
 		String line;
 		while((line=br.readLine())!=null) {
 			String[] arr =line.split(" ");
-			if(arr[0].equalsIgnoreCase(srch)) {
+			if(arr[0].equalsIgnoreCase(srch) ||arr[1].equalsIgnoreCase(srch)|| arr[2].equalsIgnoreCase(srch)||arr[3].equalsIgnoreCase(srch)){
 				System.out.println(line);
 			}	
 	}br.close();
@@ -32,24 +40,45 @@ public class AddressBook  {
 		BufferedReader br = new BufferedReader(fr);
 		String line; ;
 		while((line=br.readLine())!=null) {
-			System.out.println(line);
+			System.out.println(line+System.lineSeparator());
 		}
 	}
 		catch(Exception e) {
 		System.out.println(e);
 	}
 	}
-
+	public void sorting() {try {
+		System.out.println("Sorting According to last name.........:\n");
+		FileReader fr =new FileReader("C:\\Users\\Dipesh Kushwaha\\Desktop\\output.txt");
+		BufferedReader br = new BufferedReader(fr);
+		String line,fname,lname,email;
+		long pno; 
+		ArrayList<Address> al=new ArrayList<>();
+		while((line=br.readLine())!=null) {
+		String[] str=line.split(" ");	
+        fname=str[0];lname=str[1];email=str[2];pno=Long.valueOf(str[3]);
+        al.add(new Address(fname,lname,pno,email));
+		}
+	    Collections.sort(al,new comp());
+	    for(Address ad:al) {
+	    	System.out.println(ad.fname+"    "+ad.lname+"    "+ad.pno+"    "+ad.email);}
+	br.close();fr.close();}catch(Exception e) {
+		System.out.println(e);
+	}
+		
+	}
+//main method starts here:
 public static void main(String[] args) throws Exception{
 	Scanner in =new Scanner(System.in);
 	System.out.println("Enter Choice:");
 	System.out.println("1.Insert Data");
 	System.out.println("2.Read Data from Text file");
 	System.out.println("3.Search Data from Text file");
-	System.out.println("4.Sort by Name");
+	System.out.println("4.Sort by LastName");
 	System.out.println("5.Edit an Existing Entry:");
 	System.out.println("6.Delete from the Entry:");
 	System.out.println("7.Quit");
+	
 	int choice = in.nextInt();
 	switch(choice){
 		case 1:
@@ -65,17 +94,17 @@ public static void main(String[] args) throws Exception{
 			System.out.println("Enter Email Address:");
 			String email = in.next();
 					
-			AddressBook ab =new AddressBook(fname , lname, pno, email);
-			ArrayList<AddressBook> al = new ArrayList<AddressBook>();
+			Address ab =new Address(fname , lname, pno, email);
+			ArrayList<Address> al = new ArrayList<Address>();
 			al.add(ab);
 			for(Object obj:al) {
-				System.out.println("name =" +fname+" "+lname+" "+email+" " +pno);
+				System.out.println("name =" +fname+" "+lname+" "+email+" " +pno+"  Inserted into file");
 				
 			}
 			File f = new File("C:\\Users\\Dipesh Kushwaha\\Desktop\\output.txt");
 			if(f.exists() && !f.isDirectory()) { 
 				FileWriter writer = new FileWriter("C:\\Users\\Dipesh Kushwaha\\Desktop\\output.txt",true); 
-				for(AddressBook str:al ) {
+				for(Address str:al ) {
 				  writer.write(""+fname+" "+lname+" "+email+" " +pno + System.lineSeparator());
 				}
 				writer.close();
@@ -92,36 +121,39 @@ public static void main(String[] args) throws Exception{
 			AddressBook.Reader();
 			break;
 			
-			
-		
 		case 3:
-			System.out.println("Enter first name of the Entry to Search:");
+			System.out.println("Enter Any field to Search:");
 			String srch = in.next();
 			AddressBook.Search(srch);
 			break;
 	
 		case 4:
-			System.out.println("Sorting in Alphabetical Order:\n\n");
-			try {
-				FileReader fr =new FileReader("C:\\Users\\Dipesh Kushwaha\\Desktop\\output.txt");
-				BufferedReader br = new BufferedReader(fr);
-				String line; 
-				ArrayList<String> al=new ArrayList<>();
-				while((line=br.readLine())!=null) {
-					al.add(line);
-				}
-				Collections.sort(al);
-				for(Object obj:al)
-					System.out.println(obj);
-				br.close();
-			}
-				catch(Exception e) {
-				System.out.println(e);
-			}
-			
+			AddressBook ab =new AddressBook();
+			ab.sorting();
 			break;
 		case 5:
+			
 			break;
-	}
-}
-}
+		case 6:
+			System.out.println("Deletion is possible by giving email or phone number : ");
+			String ltr = in.next();
+			File inputFile = new File("C:\\Users\\Dipesh Kushwaha\\Desktop\\output.txt");
+			File tempFile = new File("C:\\Users\\Dipesh Kushwaha\\Desktop\\output1.txt");
+
+			BufferedReader reader = new BufferedReader(new FileReader(inputFile));                                                                                                                                                                      
+			BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+			String line;
+			while((line = reader.readLine()) != null) {
+				String[] arr = line.split(" ");
+			    if(arr[2].equalsIgnoreCase(ltr)||arr[3].equalsIgnoreCase(ltr))
+					continue;
+			    writer.write(line + System.getProperty("line.separator"));}
+			writer.close(); 
+			reader.close(); 
+//			boolean successful = tempFile.
+			break;
+		case 7:
+			System.exit(0);
+			break;
+	
+	} in.close(); }    }
