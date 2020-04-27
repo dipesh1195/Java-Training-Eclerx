@@ -150,7 +150,9 @@ public static void main(String[] args) throws Exception{
 			    writer.write(line + System.getProperty("line.separator"));}
 			writer.close(); 
 			reader.close(); 
-//			boolean successful = tempFile.
+            if(inputFile.exists())
+            	inputFile.delete();
+            tempFile.renameTo(inputFile);
 			break;
 		case 7:
 			System.exit(0);
