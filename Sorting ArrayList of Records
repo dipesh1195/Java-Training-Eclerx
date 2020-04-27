@@ -1,0 +1,95 @@
+import java.io.*;
+import java.util.*;
+class CarData {
+    public String name="",model="",color="";
+    public int year=0;;
+
+	public CarData(String name,String model,int year,String color) {
+		this.name=name;
+		this.model=model;
+		this.year=year;
+		this.color=color;
+		
+	}}
+	
+	 class compData implements Comparator<CarData>{
+
+		@Override
+		public int compare(CarData c1, CarData c2) {
+			// TODO Auto-generated method stub
+			return c1.year-c2.year;
+		}
+		
+	}
+
+public class Sortarraylist {
+	public static void main(String[] args) throws Exception {
+		Scanner in =new Scanner(System.in);
+		System.out.println("Enter Your Choice:");
+		System.out.println("1.Insert car data:");
+		System.out.println("2.Read Car data:");
+		System.out.println("3.Read Sorted car data according to year:");
+		int n= in.nextInt();
+		switch(n){
+			case 1:
+				System.out.println("Enter the car Company name:");
+				String name =in.next();
+				System.out.println("Enter car's model name:");
+				String model = in.next();
+				System.out.println("Enter car's model year:");
+				int year = in.nextInt();
+				System.out.println("Enter car's color:");
+				String color = in.next();
+				CarData cd = new CarData(name,model,year,color);
+				ArrayList<CarData> al = new ArrayList<>();
+				al.add(cd);
+				File f =new File("C:\\Users\\Dipesh Kushwaha\\Desktop\\cars.txt");
+				if (f.exists()) {
+				FileWriter fw = new FileWriter("C:\\Users\\Dipesh Kushwaha\\Desktop\\cars.txt",true);
+				for(Object obj:al) 
+				fw.write(name+" "+model +" "+year+" "+color+"\n");
+				fw.close();
+				}else {
+				FileWriter fw = new FileWriter("C:\\Users\\Dipesh Kushwaha\\Desktop\\cars.txt");
+				for(Object obj:al) 
+				fw.write(name+" "+model +" "+year+" "+color+"\n");
+				fw.close();
+				}
+				break;
+				
+			case 2:
+				try {
+					FileReader fr = new FileReader("C:\\Users\\Dipesh Kushwaha\\Desktop\\cars.txt");
+					BufferedReader br = new BufferedReader(fr);
+					   String i;    
+				       while((i=br.readLine())!=null){ 
+				    	   System.out.println(i);   
+				       }
+				       fr.close();br.close();}catch(Exception e) {
+				    	   System.out.println(e);
+				       }
+				       break;
+			case 3:
+				try {
+					FileReader fr = new FileReader("C:\\Users\\Dipesh Kushwaha\\Desktop\\cars.txt");
+					BufferedReader br = new BufferedReader(fr);
+					ArrayList<CarData> alist = new ArrayList<>();
+					   String i;    
+				       while((i=br.readLine())!=null){ 
+				    	   String[] str = i.split(" ");
+				    	   name = str[0];model = str[1]; year = Integer.valueOf(str[2]);color = str[3];
+				           alist.add(new CarData(name,model, year, color));
+				       }	
+				       System.out.println("Sorted Data....................");
+				       Collections.sort(alist,new compData());
+				      for(CarData data:alist)
+				    	  System.out.println(data.name+" " +data.model+" "+ data.year+" "+data.color);
+				fr.close();br.close();}catch(Exception e) {
+					System.out.println(e);
+					}
+				
+				break;
+		}in.close();
+	}
+
+}
